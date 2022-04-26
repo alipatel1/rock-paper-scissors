@@ -4,68 +4,137 @@
     <meta charset="utf-8">
 
     <title>Rock Paper Scissors</title>
-
+    <link rel="stylesheet" href="style.css">
     
   </head>
+
+<body>
+
+  <h1>Rock Paper Scissors!</h1>
+  <h2>Can you beat the computer?</h2>
+ <div class="buttons">
+  <button class="rock">ROCK</button>
+  <button class="paper">PAPER</button>
+  <button class="scissors">SCISSORS</button>
+ </div>
+
+ <div id="results">
+   <h2 id="roundWin"></h2>
+   <h1 id="gameWinner"></h1>
+ </div>
+
+ <div>
+  <p> Player Score: <span id="playerNum"></span></p>
+  <p>Computer Score: <span id="computerNum"></span></p>
+ </div>
+
+ <button id="reset">Reset</button>
+
+</body>
 
   <script>
 let choice = ['rock','paper','scissors'];
 function computerPlay() { 
   return choice[Math.floor(Math.random() * choice.length)]
-
 }
 
 let playerScore = 0 ;
 let computerScore = 0 ;
 
+let computerSelection = computerPlay()
+//let playerSelection = prompt('Choose one! Rock, Paper or Scissors.')
+//let result = playRound(playerSelection, computerSelection)
+
+const playerNum = document.getElementById('playerNum');
+const computerNum = document.getElementById('computerNum');
+
 function playRound(playerSelection, computerSelection) {
   // your code here!
+  //console.log(playerSelection);
+  //console.log(computerSelection);
   if (playerSelection == computerSelection) {
-  return 'tie' ;
+  console.log('tie') ;
+  roundWin.innerText= 'Tie!'
+  computerNum.innerText = computerScore;
+  playerNum.innerText = playerScore ;
 } else if (playerSelection == 'rock' && computerSelection == 'scissors'){
   playerScore++ ;
-  return 'player wins!' ;
+  console.log('player wins!') ;
+  roundWin.innerText= 'Player Wins! Rock beats Scissors'
+  computerNum.innerText = computerScore;
+  playerNum.innerText = playerScore ;
 }else if (playerSelection == 'rock' && computerSelection == 'paper') {
   computerScore++ ;
-  return 'computer wins!' ;
+  console.log('computer wins!') ;
+  roundWin.innerText= 'Computer! Paper beats Rock'
+  computerNum.innerText = computerScore;
+  playerNum.innerText = playerScore ;
 }else if (playerSelection == 'paper' && computerSelection == 'rock') {
   playerScore++ ;
-  return 'player wins!' ;
+  console.log('player wins!') ;
+  roundWin.innerText= 'Player Wins! Paper beats Rock'
+  computerNum.innerText = computerScore;
+  playerNum.innerText = playerScore ;
 }else if (playerSelection == 'paper' && computerSelection == 'scissors') {
   computerScore++ ;
-  return 'computer wins!' ;
+  console.log('computer wins!') ;
+  roundWin.innerText= 'Computer Wins! Scissors beats Paper'
+  computerNum.innerText = computerScore;
+  playerNum.innerText = playerScore ;
 }else if (playerSelection == 'scissors' && computerSelection == 'paper') {
   playerScore++ ;
-  return 'player wins!' ;
+  console.log('player wins!') ;
+  roundWin.innerText= 'Player Wins! Scissors beats Paper'
+  computerNum.innerText = computerScore;
+  playerNum.innerText = playerScore ;
 }else if (playerSelection == 'scissors' && computerSelection == 'rock') {
   computerScore++ ;
-  return 'computer wins!' ;
+  console.log('computer wins!') ;
+  roundWin.innerText= 'Computer Wins! Rock beats Scissors'
+  computerNum.innerText = computerScore;
+  playerNum.innerText = playerScore ;
 }
-}
-
-
-function game() {
-
-for (i = 0; i < 5; i++) {
-  let computerSelection = computerPlay()
-  let playerSelection = prompt('Choose one! Rock, Paper or Scissors.')
-  let result = playRound(playerSelection, computerSelection)
-
-}
-  if (playerScore > computerScore) {
-    console.log('player wins!') ;
-  }else if (computerScore > playerScore) {
-    console.log('computer wins!') ;
-  }else {
-    console.log('tie') ;
-  }
-
-console.log('player score = ' + playerScore, 'computer score = ' + computerScore)
-}
-
-
-game()
+if (playerScore + computerScore == 5) {
   
+  if (playerScore > computerScore) {
+    console.log('player wins game!') ;
+    gameWinner.innerText = 'Player wins game!' ;
+  }else if (computerScore > playerScore) {
+    console.log('computer wins game!') ;
+    gameWinner.innerText = 'Computer wins game!' ;
+  }else {
+    gameWinner.innerText = 'tie' ;
+  };
+}
+};
+
+function resetGame() {
+  playerNum.innerText = '' ;
+  computerNum.innerText = '' ;
+  playerScore = 0 ;
+  computerScore = 0 ;
+  roundWin.innerText= '' ;
+  gameWinner.innerText = '' ;
+} ;
+
+const buttons = document.querySelectorAll('button'); //here we got the class list rock paper and scissors and targeted it
+
+buttons.forEach((button) => { //goes through each of the "button" as targeted above in querySelectorAll
+  const playerSelection = button.getAttribute('class'); //playerSelection is grabbing the button's class
+  button.addEventListener('click', () => {
+    if (playerScore + computerScore === 5) {
+      let buttonDisable = true ;
+    } else {
+      playRound(playerSelection, computerPlay())
+    }
+  } );
+  
+}); // adding the function for when clicked it will run playRound
+
+const reset = document.getElementById('reset');
+
+  reset.addEventListener('click', () => resetGame());
+
 
   </script>
 
